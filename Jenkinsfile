@@ -6,7 +6,7 @@ pipeline {
     }
     stages {
         stage('Clone'){
-            steps {git url:'https://github.com/UST-Training-B5/auth-service.git', branch:'main'}
+            steps {git url:'https://github.com/UST-Training-B5/service-registry.git', branch:'main'}
         }
         stage('Build'){
             steps {bat "mvn clean install -DskipTests"}
@@ -16,10 +16,10 @@ pipeline {
         }
         stage('Deploy'){
             steps{
-                bat "docker rm -f auth-container"
-                bat "docker rmi -f auth-image"
-                bat "docker build -t auth-image ."
-                bat "docker run -p 8090:8090 -d --name auth-container auth-image"}
+                bat "docker rm -f registry-container"
+                bat "docker rmi -f registry-image"
+                bat "docker build -t registry-image ."
+                bat "docker run -p 8761:8761 -d --name registry-container registry-image"}
         }
     }
 }
